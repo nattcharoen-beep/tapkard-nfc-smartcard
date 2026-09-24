@@ -140,16 +140,26 @@
     ];
 
     async function fetchOrders() {
+      let localOrders = [];
+      try {
+        localOrders = JSON.parse(localStorage.getItem('tapkard_orders') || '[]');
+      } catch (e) {}
+
       try {
         const res = await fetch('/api/orders');
         if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            ordersList = data;
+          const remoteData = await res.json();
+          if (Array.isArray(remoteData)) {
+            const ids = new Set(localOrders.map(o => o.order_id));
+            remoteData.forEach(r => {
+              if (!ids.has(r.order_id)) localOrders.push(r);
+            });
           }
         }
-      } catch (e) {
-        console.log("Local standalone mode or API offline, showing cached orders.");
+      } catch (e) {}
+
+      if (localOrders.length > 0) {
+        ordersList = localOrders;
       }
       renderOrders();
     }
@@ -163,7 +173,7 @@
       let printing = 0;
       let completed = 0;
 
-      ordersList.forEach(o => {
+      ordersList.forEach((o, index) => {
         if (o.status === 'pending_proof') pending++;
         else if (o.status === 'sent_to_printer') printing++;
         else if (o.status === 'completed') completed++;
@@ -198,10 +208,10 @@
           </td>
           <td class="p-3.5 space-y-1.5">
             <div class="flex gap-1.5">
-              <a href="${o.front_image}" target="_blank" download class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-semibold text-slate-200 flex items-center gap-1">
+              <a href="${o.front_image}" target="_blank" download="${o.order_id}_front_300dpi.png" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-semibold text-slate-200 flex items-center gap-1">
                 <i data-lucide="download" class="w-3 h-3"></i> หน้า (300DPI)
               </a>
-              <a href="${o.back_image}" target="_blank" download class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-semibold text-slate-200 flex items-center gap-1">
+              <a href="${o.back_image}" target="_blank" download="${o.order_id}_back_300dpi.png" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-semibold text-slate-200 flex items-center gap-1">
                 <i data-lucide="download" class="w-3 h-3"></i> หลัง (300DPI)
               </a>
             </div>
@@ -219,6 +229,9 @@
             <button onclick="markCompleted('${o.order_id}')" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-emerald-600 text-white font-semibold text-xs transition-colors">
               เสร็จสิ้น
             </button>
+            <button onclick="deleteOrder(${index})" class="p-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-white/5 transition-colors" title="ลบรายการ">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -234,35 +247,47 @@
 
     function copyNfcUrl(url) {
       navigator.clipboard.writeText(url).then(() => {
-        alert('คัดลอก URL สำหรับเขียนลงชิป NFC เรียบร้อยแล้ว:\n\n' + url + '\n\n(เปิดแอป NFC Tools บน Xiaomi 14T Pro ➔ กด Write ➔ วางลิงก์นี้ได้ทันที)');
+        alert('คัดลอก URL สำหรับเขียนลงชิป NFC เรียบร้อยแล้ว:\n\n' + url + '\n\n(เปิดแอป NFC Tools บน Xiaomi 14T Pro ➔ กด Write ➔ Add Record ➔ URL ➔ วางลิงก์นี้ได้ทันที)');
       });
     }
 
-    async function dispatchToPrinter(orderId) {
-      const confirmed = confirm(`ยืนยันการส่งไฟล์ภาพสกรีนความละเอียด 300 DPI ของออเดอร์ ${orderId} ให้ร้านสกรีน?`);
+    function dispatchToPrinter(orderId) {
+      const order = ordersList.find(o => o.order_id === orderId);
+      if (!order) return;
+
+      const confirmed = confirm(`ยืนยันการส่งไฟล์สกรีน 300 DPI ของออเดอร์ ${orderId} ให้ร้านสกรีน?`);
       if (confirmed) {
+        order.status = 'sent_to_printer';
         try {
-          await fetch('/api/orders/update-status', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ order_id: orderId, status: 'sent_to_printer' })
-          });
+          localStorage.setItem('tapkard_orders', JSON.stringify(ordersList));
         } catch (e) {}
-        alert(`🚀 ส่งงานออเดอร์ ${orderId} ให้ร้านสกรีนเรียบร้อยแล้ว!\nระบบได้ส่งไฟล์ front_print_300dpi.png และ back_print_300dpi.png พร้อมสเปกงานพิมพ์ให้เรียบร้อยครับ`);
-        fetchOrders();
+        renderOrders();
+        
+        const specMsg = encodeURIComponent(`สวัสดีครับ ส่งงานพิมพ์สกรีน UV (TAPKARD NFC)\nรหัสออเดอร์: ${order.order_id}\nชื่อบนบัตร: ${order.customer_name}\nตำแหน่ง: ${order.title} (${order.company})\nเบอร์โทร: ${order.phone}\nที่อยู่ส่ง: ${order.address || '-'}\nสเปก: บัตร PVC ดำด้าน 85.6x54 มม. สกรีน UV 300 DPI สองหน้า (ไฟล์งานดาวน์โหลดจากระบบ)`);
+        alert(`🚀 ส่งงานออเดอร์ ${orderId} ให้ร้านสกรีนเรียบร้อยแล้ว!\nระบบกำลังเปิดหน้าแชท LINE เพื่อส่งรายละเอียดให้โรงพิมพ์ครับ`);
+        window.open(`https://line.me/R/ti/p/@printshop?text=${specMsg}`, '_blank');
       }
     }
 
-    async function markCompleted(orderId) {
+    function markCompleted(orderId) {
+      const order = ordersList.find(o => o.order_id === orderId);
+      if (!order) return;
+      order.status = 'completed';
       try {
-        await fetch('/api/orders/update-status', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ order_id: orderId, status: 'completed' })
-        });
+        localStorage.setItem('tapkard_orders', JSON.stringify(ordersList));
       } catch (e) {}
+      renderOrders();
       alert(`อัปเดตสถานะออเดอร์ ${orderId} เป็น [เสร็จสิ้น] เรียบร้อยแล้ว`);
-      fetchOrders();
+    }
+
+    function deleteOrder(index) {
+      if (confirm('ต้องการลบออเดอร์นี้หรือไม่?')) {
+        ordersList.splice(index, 1);
+        try {
+          localStorage.setItem('tapkard_orders', JSON.stringify(ordersList));
+        } catch (e) {}
+        renderOrders();
+      }
     }
 
     // Initialize

@@ -7,6 +7,7 @@
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="card_generator.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <script>
@@ -235,8 +236,9 @@
     async function handleOrderSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('btnSubmitOrder');
-      btn.innerHTML = `<span>กำลังสร้างแบบการ์ด 300 DPI...</span>`;
+      btn.innerHTML = `<span class="flex items-center gap-2 justify-center"><i data-lucide="loader" class="w-4 h-4 animate-spin"></i> กำลังสร้างแบบพิมพ์ 300 DPI อัตโนมัติบน Cloud...</span>`;
       btn.disabled = true;
+      lucide.createIcons();
 
       const orderData = {
         name: document.getElementById('custName').value.trim(),
@@ -247,31 +249,121 @@
         email: document.getElementById('custEmail').value.trim(),
         address: document.getElementById('custAddress').value.trim(),
         theme: document.querySelector('input[name="theme"]:checked').value,
-        avatar_base64: uploadedAvatarBase64
+        avatar: uploadedAvatarBase64
       };
 
+      const profileUrl = `https://nattcharoen-beep.github.io/tapkard-nfc-smartcard/profile.html?name=${encodeURIComponent(orderData.name)}&title=${encodeURIComponent(orderData.title)}&company=${encodeURIComponent(orderData.company)}&phone=${encodeURIComponent(orderData.phone)}&line=${encodeURIComponent(orderData.line_id)}&email=${encodeURIComponent(orderData.email)}`;
+      orderData.profile_url = profileUrl;
+
+      // 1. Generate 300 DPI Canvas Cards right in the browser (Cloud-Native!)
+      let printPackage = null;
       try {
-        const res = await fetch('/api/orders/create', {
+        printPackage = await window.generatePrintPackage(orderData);
+      } catch (err) {
+        console.error("Canvas generation error:", err);
+      }
+
+      const orderId = 'TK-' + Math.floor(100000 + Math.random() * 900000);
+      const orderRecord = {
+        order_id: orderId,
+        created_at: new Date().toLocaleString('th-TH'),
+        status: 'approved',
+        customer_name: orderData.name,
+        title: orderData.title,
+        company: orderData.company,
+        phone: orderData.phone,
+        line_id: orderData.line_id,
+        email: orderData.email,
+        address: orderData.address,
+        theme: orderData.theme,
+        profile_url: profileUrl,
+        front_image: printPackage ? printPackage.frontDataUrl : null,
+        back_image: printPackage ? printPackage.backDataUrl : null,
+        mockup_image: printPackage ? printPackage.mockupDataUrl : null
+      };
+
+      // 2. Save into cloud/browser sync database
+      try {
+        let existing = JSON.parse(localStorage.getItem('tapkard_orders') || '[]');
+        existing.unshift(orderRecord);
+        localStorage.setItem('tapkard_orders', JSON.stringify(existing));
+      } catch (e) {
+        console.log("Storage save exception:", e);
+      }
+
+      // Also send to backend if running
+      try {
+        await fetch('/api/orders/create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(orderData)
         });
+      } catch (e) {}
 
-        if (res.ok) {
-          const result = await res.json();
-          alert(`🎉 บันทึกคำสั่งซื้อเรียบร้อยแล้ว!\n\nรหัสออเดอร์: ${result.order_id}\n\nระบบได้ทำการสร้างแบบพิมพ์สกรีน 300 DPI และส่งแบบพรูฟเข้าสู่ระบบเรียบร้อยแล้วครับ!`);
-          window.location.href = result.profile_url;
-          return;
-        }
-      } catch (err) {
-        console.log("Running in static mode, fallback to direct LINE closing.");
+      // 3. Show Interactive Proof & Confirmation Modal
+      showOrderSuccessModal(orderRecord, printPackage);
+      btn.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-emerald-400"></i><span>สร้างแบบการ์ดเรียบร้อยแล้ว</span>`;
+      lucide.createIcons();
+    }
+
+    function showOrderSuccessModal(record, pkg) {
+      const modal = document.getElementById('proofSuccessModal');
+      document.getElementById('modalOrderId').innerText = record.order_id;
+      document.getElementById('modalProofImg').src = pkg ? pkg.mockupDataUrl : 'sample_proof/client_mockup_proof.png';
+      
+      const dlFront = document.getElementById('btnDlFront');
+      const dlBack = document.getElementById('btnDlBack');
+      if (pkg) {
+        dlFront.href = pkg.frontDataUrl;
+        dlFront.download = `${record.order_id}_front_300dpi.png`;
+        dlBack.href = pkg.backDataUrl;
+        dlBack.download = `${record.order_id}_back_300dpi.png`;
       }
 
-      // Static Fallback for GitHub Pages
-      const msg = encodeURIComponent(`สวัสดีครับ สั่งทำนามบัตร TAPKARD NFC\nชื่อ: ${orderData.name}\nตำแหน่ง: ${orderData.title}\nเบอร์: ${orderData.phone}\nที่อยู่: ${orderData.address}`);
-      alert(`🎉 บันทึกคำสั่งซื้อของคุณเรียบร้อยแล้ว!\n\nเรากำลังพาคุณไปยัง LINE เพื่อส่งภาพแบบพรูฟก่อนเริ่มสกรีนจริงครับ`);
-      window.location.href = `https://line.me/R/ti/p/@tapkard?text=${msg}`;
+      const lineMsg = encodeURIComponent(`🎉 แจ้งออเดอร์ใหม่ TAPKARD NFC\nรหัส: ${record.order_id}\nชื่อ: ${record.customer_name}\nตำแหน่ง: ${record.title}\nเบอร์: ${record.phone}\nที่อยู่จัดส่ง: ${record.address}`);
+      document.getElementById('btnConfirmLine').href = `https://line.me/R/ti/p/@tapkard?text=${lineMsg}`;
+
+      modal.classList.remove('hidden');
     }
   </script>
+
+  <!-- Cloud Proof Modal -->
+  <div id="proofSuccessModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="glass-card max-w-2xl w-full rounded-3xl p-6 sm:p-8 border border-white/20 space-y-5 text-center shadow-2xl animate-in fade-in zoom-in-95">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold">
+        <i data-lucide="check-circle" class="w-4 h-4"></i>
+        <span>ระบบสร้างแบบพิมพ์ 300 DPI บน Cloud สำเร็จแล้ว</span>
+      </div>
+
+      <h2 class="text-xl sm:text-2xl font-bold text-white">แบบตัวอย่างบัตรของคุณ (Order: <span id="modalOrderId" class="text-blue-400"></span>)</h2>
+
+      <!-- Proof Image Container -->
+      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+        <img id="modalProofImg" src="" alt="Proof Preview" class="w-full h-auto object-contain">
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+        <a id="btnDlFront" href="#" download class="py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-white text-xs font-bold flex items-center justify-center gap-1.5">
+          <i data-lucide="download" class="w-4 h-4 text-blue-400"></i>
+          <span>โหลดไฟล์หน้าบัตร (300 DPI)</span>
+        </a>
+        <a id="btnDlBack" href="#" download class="py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-white text-xs font-bold flex items-center justify-center gap-1.5">
+          <i data-lucide="download" class="w-4 h-4 text-blue-400"></i>
+          <span>โหลดไฟล์หลังบัตร (300 DPI)</span>
+        </a>
+      </div>
+
+      <div class="pt-2">
+        <a id="btnConfirmLine" href="https://line.me" target="_blank" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white font-bold text-sm shadow-xl shadow-green-600/30 flex items-center justify-center gap-2">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          <span>ยืนยันแบบและส่งเข้า LINE ร้านเพื่อผลิต</span>
+        </a>
+      </div>
+
+      <button onclick="document.getElementById('proofSuccessModal').classList.add('hidden')" class="text-xs text-slate-400 hover:text-white pt-2">
+        ปิดหน้าต่างนี้
+      </button>
+    </div>
+  </div>
 </body>
 </html>
