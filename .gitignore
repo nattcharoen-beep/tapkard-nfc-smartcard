@@ -2,3 +2,7 @@
 Thumbs.db
 *.tmp
 *.log
+.env
+orders/
+__pycache__/
+orders_db.json
