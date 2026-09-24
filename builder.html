@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบสร้างนามบัตรดิจิทัล & เขียนการ์ด NFC | TAPKARD™ Profile Builder</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Prompt', 'Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: #0B0F19;
+      color: #f1f5f9;
+    }
+    .glass-box {
+      background: rgba(17, 24, 39, 0.8);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+
+<body class="font-sans antialiased min-h-screen p-4 sm:p-8">
+
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto flex items-center justify-between pb-8 border-b border-white/10">
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg">
+        <i data-lucide="radio" class="w-5 h-5"></i>
+      </a>
+      <div>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">TAPKARD™ Profile & NFC Builder</h1>
+        <p class="text-xs text-slate-400">สร้างหน้าโปรไฟล์ดิจิทัล และสร้างลิงก์สำหรับเขียนลงชิป NFC ได้ทันที</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <a href="index.html" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-slate-300 transition-colors">
+        กลับหน้าหลัก
+      </a>
+      <a href="profile.html" target="_blank" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white transition-colors flex items-center gap-1.5 shadow">
+        <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+        <span>ดูตัวอย่าง</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8">
+    
+    <!-- Left Column: Form Builder -->
+    <div class="lg:col-span-7 space-y-6">
+      <div class="glass-box rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <h2 class="font-bold text-lg text-white flex items-center gap-2">
+            <i data-lucide="sliders" class="w-5 h-5 text-blue-400"></i>
+            <span>ข้อมูลสำหรับนามบัตรดิจิทัล</span>
+          </h2>
+          <span class="text-xs text-slate-400">อัปเดตแบบเรียลไทม์</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">ชื่อ - นามสกุล *</label>
+            <input type="text" id="inputName" value="ณัฐพงษ์ เจริญทรัพย์" oninput="updatePreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">ตำแหน่ง / อาชีพ *</label>
+            <input type="text" id="inputTitle" value="Managing Director & Founder" oninput="updatePreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">ชื่อบริษัท / องค์กร</label>
+            <input type="text" id="inputCompany" value="TAPKARD Enterprise Co., Ltd." oninput="updatePreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">เบอร์โทรศัพท์ (ใส่เครื่องหมายขีดได้)</label>
+            <input type="tel" id="inputPhone" value="081-234-5678" oninput="updatePreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">ข้อความแนะนำตัวสั้นๆ (Bio / Tagline)</label>
+          <textarea id="inputBio" rows="2" oninput="updatePreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500">ให้บริการโซลูชันนามบัตรดิจิทัล NFC สำหรับองค์กรและบุคคล พร้อมป้ายแตะรีวิว Google 5 ดาว</textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">LINE ID (ใส่ @ หรือ ID)</label>
+            <input type="text" id="inputLine" value="@tapkard" oninput="updatePreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1.5">อีเมลสำหรับติดต่อ</label>
+            <input type="email" id="inputEmail" value="contact@tapkard.com" oninput="updatePreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">เบอร์พร้อมเพย์ (PromptPay สำหรับรับเงิน)</label>
+          <input type="text" id="inputPromptpay" value="0812345678" oninput="updatePreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Avatar Presets -->
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-2">เลือกรูปโปรไฟล์ตัวอย่าง หรือวางลิงก์รูปของคุณเอง</label>
+          <div class="flex items-center gap-3 overflow-x-auto pb-2">
+            <button onclick="setAvatar('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80')" class="w-12 h-12 rounded-xl overflow-hidden border-2 border-blue-500 shrink-0">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover">
+            </button>
+            <button onclick="setAvatar('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80')" class="w-12 h-12 rounded-xl overflow-hidden border border-white/20 hover:border-blue-500 shrink-0">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover">
+            </button>
+            <button onclick="setAvatar('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80')" class="w-12 h-12 rounded-xl overflow-hidden border border-white/20 hover:border-blue-500 shrink-0">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover">
+            </button>
+            <button onclick="setAvatar('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80')" class="w-12 h-12 rounded-xl overflow-hidden border border-white/20 hover:border-blue-500 shrink-0">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover">
+            </button>
+          </div>
+          <input type="text" id="inputAvatar" placeholder="วางลิงก์รูป URL เช่น https://..." oninput="updatePreview()" class="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs mt-2 focus:outline-none focus:border-blue-500">
+        </div>
+      </div>
+
+      <!-- Step-by-Step Writing Guide -->
+      <div class="glass-box rounded-3xl p-6 sm:p-8 space-y-4">
+        <h3 class="font-bold text-base text-white flex items-center gap-2">
+          <i data-lucide="smartphone" class="w-5 h-5 text-emerald-400"></i>
+          <span>วิธีบันทึกลิงก์ลงบัตร NFC ด้วย Xiaomi 14T Pro หรือ iPhone</span>
+        </h3>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+          <div class="p-3.5 rounded-2xl bg-white/5 border border-white/5 space-y-1.5">
+            <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs">1</span>
+            <p class="font-semibold text-white">โหลดแอปฟรี NFC Tools</p>
+            <p class="text-[11px] text-slate-400">เข้า Google Play Store หรือ App Store โหลดแอปชื่อ <strong>NFC Tools</strong></p>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white/5 border border-white/5 space-y-1.5">
+            <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs">2</span>
+            <p class="font-semibold text-white">กด Write ➔ URL</p>
+            <p class="text-[11px] text-slate-400">เลือกแท็บ Write ➔ Add a record ➔ URL/Web address ➔ วางลิงก์ที่ก๊อปปี้จากกล่องขวามือ</p>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white/5 border border-white/5 space-y-1.5">
+            <span class="w-6 h-6 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">3</span>
+            <p class="font-semibold text-white">แตะบัตรหลังมือถือ</p>
+            <p class="text-[11px] text-slate-400">กดปุ่ม Write แล้วนำการ์ดมาทาบบริเวณขอบกล้องหลัง Xiaomi 14T Pro เครื่องจะขึ้นเครื่องหมายถูกเขียวเสร็จสิ้น!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Resulting URL & QR Code Output -->
+    <div class="lg:col-span-5 space-y-6">
+      
+      <!-- Generated Output Card -->
+      <div class="glass-box rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl sticky top-8 border-blue-500/30">
+        <div class="flex items-center justify-between">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>NFC Ready URL</span>
+          </span>
+          <a id="btnTestLive" href="profile.html" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1">
+            <span>ทดสอบเปิดหน้าจริง</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+
+        <!-- Generated URL Box -->
+        <div class="space-y-2">
+          <label class="block text-xs font-semibold text-slate-300">ลิงก์สำหรับใส่ในบัตร NFC:</label>
+          <div class="p-3 rounded-2xl bg-black/60 border border-white/10 break-all text-xs font-mono text-cyan-300 select-all" id="outputUrl">
+            กำลังสร้างลิงก์...
+          </div>
+          <button onclick="copyGeneratedUrl()" class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 transition-all">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span id="btnCopyText">คัดลอกลิงก์ (นำไปวางใน NFC Tools)</span>
+          </button>
+        </div>
+
+        <!-- QR Code Preview -->
+        <div class="text-center p-4 rounded-2xl bg-white/5 border border-white/5 space-y-3">
+          <p class="text-xs font-semibold text-slate-300">QR Code สำหรับพิมพ์ด้านหลังบัตร</p>
+          <div class="w-44 h-44 mx-auto bg-white p-2.5 rounded-2xl shadow-inner flex items-center justify-center">
+            <img id="qrImage" src="" alt="NFC QR Code" class="w-full h-full object-contain">
+          </div>
+          <p class="text-[10px] text-slate-400">สแกนเพื่อเปิดหน้าโปรไฟล์เดียวกัน หรือดาวน์โหลดไปสกรีนหลังบัตร</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    let currentAvatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80';
+
+    function setAvatar(url) {
+      currentAvatar = url;
+      document.getElementById('inputAvatar').value = url;
+      updatePreview();
+    }
+
+    function updatePreview() {
+      const name = document.getElementById('inputName').value.trim();
+      const title = document.getElementById('inputTitle').value.trim();
+      const company = document.getElementById('inputCompany').value.trim();
+      const phone = document.getElementById('inputPhone').value.trim();
+      const bio = document.getElementById('inputBio').value.trim();
+      const line = document.getElementById('inputLine').value.trim();
+      const email = document.getElementById('inputEmail').value.trim();
+      const promptpay = document.getElementById('inputPromptpay').value.trim();
+      const avatar = document.getElementById('inputAvatar').value.trim() || currentAvatar;
+
+      const base = window.location.href.includes('builder.html') 
+        ? window.location.href.split('builder.html')[0] + 'profile.html'
+        : window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/profile.html');
+      const params = new URLSearchParams();
+      if (name) params.set('name', name);
+      if (title) params.set('title', title);
+      if (company) params.set('company', company);
+      if (phone) params.set('phone', phone);
+      if (bio) params.set('bio', bio);
+      if (line) params.set('line', line);
+      if (email) params.set('email', email);
+      if (promptpay) params.set('promptpay', promptpay);
+      if (avatar) params.set('avatar', avatar);
+
+      const finalUrl = `${base}?${params.toString()}`;
+      document.getElementById('outputUrl').innerText = finalUrl;
+      document.getElementById('btnTestLive').href = finalUrl;
+
+      // Generate QR Code via reliable QR API
+      const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(finalUrl)}`;
+      document.getElementById('qrImage').src = qrApi;
+    }
+
+    function copyGeneratedUrl() {
+      const url = document.getElementById('outputUrl').innerText;
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = document.getElementById('btnCopyText');
+        btn.innerText = 'คัดลอกสำเร็จ! นำไปวางในแอปได้เลย';
+        setTimeout(() => btn.innerText = 'คัดลอกลิงก์ (นำไปวางใน NFC Tools)', 2500);
+      });
+    }
+
+    // Initialize
+    updatePreview();
+  </script>
+</body>
+</html>

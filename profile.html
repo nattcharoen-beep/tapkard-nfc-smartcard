@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>นามบัตรดิจิทัลอัจฉริยะ | TAPKARD™ Digital Business Card</title>
+  
+  <!-- Meta tags -->
+  <meta name="description" content="นามบัตรดิจิทัลอัจฉริยะ TAPKARD™ แตะปุ๊บ บันทึกเบอร์โทรและข้อมูลการติดต่อลงเครื่องทันที">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Prompt', 'Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              gold: '#D4AF37',
+              dark: '#0B0F19',
+              card: '#131A2A',
+              accent: '#3B82F6'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 0%, #172554 0%, #0B0F19 75%);
+      min-height: 100vh;
+    }
+    .glass-card {
+      background: rgba(19, 26, 42, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .action-btn {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .action-btn:active {
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+
+<body class="text-slate-100 font-sans antialiased p-4 sm:p-6 pb-28 flex flex-col items-center justify-start min-h-screen">
+
+  <!-- Container for Mobile-First Card Layout -->
+  <div class="w-full max-w-md space-y-4">
+    
+    <!-- Top Brand & Share Bar -->
+    <div class="flex items-center justify-between px-2 pt-2">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md">
+          <i data-lucide="radio" class="w-4 h-4"></i>
+        </div>
+        <span class="text-xs font-bold tracking-wider text-slate-300 uppercase">TAPKARD™ SMART NFC</span>
+      </div>
+      
+      <button onclick="shareProfile()" class="text-xs text-slate-400 hover:text-white flex items-center gap-1.5 py-1 px-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+        <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+        <span>แชร์หน้านี้</span>
+      </button>
+    </div>
+
+    <!-- Main Profile Card (Cover & Avatar) -->
+    <div class="glass-card rounded-3xl overflow-hidden shadow-2xl relative">
+      <!-- Decorative Cover Header -->
+      <div class="h-32 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 relative">
+        <div class="absolute inset-0 opacity-30 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur border border-white/10 text-[10px] text-emerald-400 font-medium flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Verified NFC Card</span>
+        </div>
+      </div>
+
+      <!-- Avatar & Profile Details -->
+      <div class="px-6 pb-6 pt-0 relative">
+        <div class="flex justify-between items-end -mt-14 mb-4">
+          <div class="relative group">
+            <div id="avatarContainer" class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 p-1 shadow-xl border-4 border-[#0B0F19]">
+              <img id="profileAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Profile" class="w-full h-full object-cover rounded-xl">
+            </div>
+            <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-blue-600 border-2 border-[#0B0F19] flex items-center justify-center text-white" title="NFC Connected">
+              <i data-lucide="zap" class="w-3 h-3"></i>
+            </div>
+          </div>
+
+          <!-- Quick Connect Pills -->
+          <div class="flex gap-2">
+            <button onclick="openExchangeModal()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-semibold flex items-center gap-1.5 action-btn">
+              <i data-lucide="user-check" class="w-3.5 h-3.5 text-blue-400"></i>
+              <span>แลกคอนแท็กต์</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Name & Titles -->
+        <div class="space-y-1">
+          <h1 id="profileName" class="text-2xl font-bold text-white tracking-tight">ณัฐพงษ์ เจริญทรัพย์</h1>
+          <p id="profileTitle" class="text-sm font-semibold text-blue-400">Managing Director & Founder</p>
+          <p id="profileCompany" class="text-xs text-slate-400 flex items-center gap-1">
+            <i data-lucide="building" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span id="companyText">TAPKARD Enterprise Co., Ltd.</span>
+          </p>
+        </div>
+
+        <!-- Bio / Tagline -->
+        <p id="profileBio" class="text-xs text-slate-300 mt-3 pt-3 border-t border-white/10 leading-relaxed">
+          ให้บริการโซลูชันนามบัตรดิจิทัล NFC สำหรับองค์กรและเซลล์มืออาชีพ พร้อมป้ายแตะรีวิว Google 5 ดาวหน้าร้าน ช่วยยกระดับแบรนด์สู่ยุคดิจิทัล 100%
+        </p>
+
+        <!-- ONE-TAP SAVE CONTACT BUTTON (Primary Action) -->
+        <div class="mt-5">
+          <button onclick="downloadVCard()" class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-600/30 flex items-center justify-center gap-2 action-btn">
+            <i data-lucide="user-plus" class="w-5 h-5 text-yellow-300"></i>
+            <span>บันทึกลงในสมุดโทรศัพท์ (Save Contact)</span>
+          </button>
+          <p class="text-[10px] text-center text-slate-400 mt-1.5">แตะครั้งเดียว เบอร์โทร LINE อีเมล จะบันทึกเข้า iPhone/Android ทันที</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Quick Action Grid (Call, LINE, Email, Maps) -->
+    <div class="grid grid-cols-4 gap-2.5">
+      <a id="btnCall" href="tel:0812345678" class="glass-card p-3 rounded-2xl flex flex-col items-center justify-center gap-1 text-center hover:bg-blue-600/20 hover:border-blue-500/50 action-btn">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+          <i data-lucide="phone" class="w-5 h-5"></i>
+        </div>
+        <span class="text-[11px] font-semibold text-slate-200">โทรออก</span>
+      </a>
+
+      <a id="btnLine" href="https://line.me/R/ti/p/@tapkard" target="_blank" class="glass-card p-3 rounded-2xl flex flex-col items-center justify-center gap-1 text-center hover:bg-emerald-600/20 hover:border-emerald-500/50 action-btn">
+        <div class="w-10 h-10 rounded-xl bg-green-500/20 text-green-400 flex items-center justify-center">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+        </div>
+        <span class="text-[11px] font-semibold text-slate-200">แอด LINE</span>
+      </a>
+
+      <a id="btnEmail" href="mailto:contact@tapkard.com" class="glass-card p-3 rounded-2xl flex flex-col items-center justify-center gap-1 text-center hover:bg-purple-600/20 hover:border-purple-500/50 action-btn">
+        <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+          <i data-lucide="mail" class="w-5 h-5"></i>
+        </div>
+        <span class="text-[11px] font-semibold text-slate-200">ส่งอีเมล</span>
+      </a>
+
+      <a id="btnMap" href="https://maps.google.com" target="_blank" class="glass-card p-3 rounded-2xl flex flex-col items-center justify-center gap-1 text-center hover:bg-amber-600/20 hover:border-amber-500/50 action-btn">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+          <i data-lucide="map-pin" class="w-5 h-5"></i>
+        </div>
+        <span class="text-[11px] font-semibold text-slate-200">แผนที่</span>
+      </a>
+    </div>
+
+    <!-- Contact & Social Links List -->
+    <div class="glass-card rounded-3xl p-5 space-y-3">
+      <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">ช่องทางติดต่อ & โซเชียล</h3>
+      
+      <div class="space-y-2">
+        <!-- Phone Item -->
+        <a id="linkPhoneItem" href="tel:0812345678" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors action-btn">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+              <i data-lucide="phone-call" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <p class="text-[10px] text-slate-400">เบอร์โทรศัพท์มือถือ</p>
+              <p id="phoneText" class="text-xs font-semibold text-white">081-234-5678</p>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+        </a>
+
+        <!-- LINE Item -->
+        <a id="linkLineItem" href="https://line.me/R/ti/p/@tapkard" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors action-btn">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center">
+              <i data-lucide="message-square" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <p class="text-[10px] text-slate-400">LINE Official Account</p>
+              <p id="lineText" class="text-xs font-semibold text-white">@tapkard</p>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+        </a>
+
+        <!-- Website Item -->
+        <a id="linkWebItem" href="index.html" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors action-btn">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center">
+              <i data-lucide="globe" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <p class="text-[10px] text-slate-400">เว็บไซต์ทางการ</p>
+              <p id="webText" class="text-xs font-semibold text-white">tapkard.pages.dev</p>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+        </a>
+
+        <!-- Facebook Item -->
+        <a id="linkFbItem" href="https://facebook.com" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors action-btn">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center">
+              <i data-lucide="facebook" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <p class="text-[10px] text-slate-400">Facebook Page</p>
+              <p id="fbText" class="text-xs font-semibold text-white">TAPKARD Thailand</p>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Payment / Bank Account Box -->
+    <div class="glass-card rounded-3xl p-5 space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">โอนเงิน / พร้อมเพย์</h3>
+        <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 font-semibold">PromptPay Direct</span>
+      </div>
+
+      <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
+        <div class="space-y-0.5">
+          <p class="text-[10px] text-slate-400">เบอร์พร้อมเพย์ (PromptPay)</p>
+          <p id="promptpayText" class="text-sm font-mono font-bold text-white tracking-wider">081-234-5678</p>
+          <p class="text-[10px] text-slate-400">ชื่อบัญชี: บจก. แท็ปการ์ด เอ็นเตอร์ไพรส์</p>
+        </div>
+        <button onclick="copyPromptPay()" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-1 action-btn">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span id="copyBtnText">คัดลอก</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer: Powered By & Create Your Own -->
+    <div class="text-center pt-4 pb-2 space-y-2">
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-xs text-slate-300 font-medium transition-all">
+        <span>สนใจทำนามบัตรดิจิทัล NFC ของตัวเอง?</span>
+        <span class="text-blue-400 font-bold">คลิกที่นี่</span>
+      </a>
+      <p class="text-[10px] text-slate-500">Powered by TAPKARD™ Technology 2026</p>
+    </div>
+
+  </div>
+
+  <!-- Exchange Contact Modal -->
+  <div id="exchangeModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="glass-card max-w-sm w-full rounded-3xl p-6 border border-white/15 space-y-4 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white">
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </div>
+          <h3 class="font-bold text-white text-base">แลกคอนแท็กต์ของคุณ</h3>
+        </div>
+        <button onclick="closeExchangeModal()" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-300 leading-relaxed">
+        ส่งข้อมูลติดต่อของคุณให้ <strong id="exchangeRecipientName" class="text-white">ณัฐพงษ์</strong> เพื่อให้ติดต่อกลับได้สะดวกรวดเร็ว
+      </p>
+
+      <form onsubmit="handleExchangeSubmit(event)" class="space-y-3">
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-300 mb-1">ชื่อ-นามสกุลของคุณ</label>
+          <input type="text" id="exName" required placeholder="เช่น สมชาย ใจดี" class="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-300 mb-1">เบอร์โทรศัพท์</label>
+          <input type="tel" id="exPhone" required placeholder="08X-XXX-XXXX" class="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-300 mb-1">LINE ID หรืออีเมล (ถ้ามี)</label>
+          <input type="text" id="exContact" placeholder="LINE ID หรือ อีเมล" class="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-300 mb-1">ข้อความสั้นๆ ถึงเรา</label>
+          <textarea id="exNote" rows="2" placeholder="เช่น สนใจปรึกษาเรื่องนามบัตร NFC" class="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-blue-500"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30 flex items-center justify-center gap-1.5 action-btn">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>ส่งข้อมูลให้เจ้าของบัตร</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    // Default Profile Data (Can be overridden by URL Query Parameters)
+    const profile = {
+      name: "ณัฐพงษ์ เจริญทรัพย์",
+      title: "Managing Director & Founder",
+      company: "TAPKARD Enterprise Co., Ltd.",
+      bio: "ให้บริการโซลูชันนามบัตรดิจิทัล NFC สำหรับองค์กรและเซลล์มืออาชีพ พร้อมป้ายแตะรีวิว Google 5 ดาวหน้าร้าน ช่วยยกระดับแบรนด์สู่ยุคดิจิทัล 100%",
+      phone: "0812345678",
+      phoneDisplay: "081-234-5678",
+      line: "@tapkard",
+      email: "contact@tapkard.com",
+      website: "https://tapkard.pages.dev",
+      facebook: "https://facebook.com",
+      maps: "https://maps.google.com",
+      promptpay: "0812345678",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80"
+    };
+
+    // Parse URL params
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('name')) profile.name = params.get('name');
+    if (params.get('title')) profile.title = params.get('title');
+    if (params.get('company')) profile.company = params.get('company');
+    if (params.get('bio')) profile.bio = params.get('bio');
+    if (params.get('phone')) {
+      profile.phone = params.get('phone');
+      profile.phoneDisplay = params.get('phone');
+    }
+    if (params.get('line')) profile.line = params.get('line');
+    if (params.get('email')) profile.email = params.get('email');
+    if (params.get('promptpay')) profile.promptpay = params.get('promptpay');
+    if (params.get('avatar')) profile.avatar = params.get('avatar');
+
+    // Populate DOM
+    document.getElementById('profileName').innerText = profile.name;
+    document.getElementById('profileTitle').innerText = profile.title;
+    document.getElementById('companyText').innerText = profile.company;
+    document.getElementById('profileBio').innerText = profile.bio;
+    document.getElementById('profileAvatar').src = profile.avatar;
+    document.getElementById('exchangeRecipientName').innerText = profile.name.split(' ')[0];
+
+    document.getElementById('btnCall').href = `tel:${profile.phone}`;
+    document.getElementById('linkPhoneItem').href = `tel:${profile.phone}`;
+    document.getElementById('phoneText').innerText = profile.phoneDisplay;
+
+    const lineUrl = profile.line.startsWith('@') ? `https://line.me/R/ti/p/${profile.line}` : `https://line.me/ti/p/~${profile.line}`;
+    document.getElementById('btnLine').href = lineUrl;
+    document.getElementById('linkLineItem').href = lineUrl;
+    document.getElementById('lineText').innerText = profile.line;
+
+    document.getElementById('btnEmail').href = `mailto:${profile.email}`;
+    document.getElementById('promptpayText').innerText = profile.promptpay;
+
+    // vCard Generator & Auto Download
+    function downloadVCard() {
+      const vcard = 
+`BEGIN:VCARD
+VERSION:3.0
+FN;CHARSET=UTF-8:${profile.name}
+N;CHARSET=UTF-8:${profile.name};;;;
+ORG;CHARSET=UTF-8:${profile.company}
+TITLE;CHARSET=UTF-8:${profile.title}
+TEL;TYPE=CELL,VOICE:${profile.phone}
+EMAIL;TYPE=PREF,INTERNET:${profile.email}
+URL;CHARSET=UTF-8:${profile.website}
+NOTE;CHARSET=UTF-8:Smart NFC Card via TAPKARD | LINE: ${profile.line}
+END:VCARD`;
+
+      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${profile.name.replace(/\s+/g, '_')}_contact.vcf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function copyPromptPay() {
+      navigator.clipboard.writeText(profile.promptpay).then(() => {
+        const btn = document.getElementById('copyBtnText');
+        btn.innerText = 'คัดลอกแล้ว!';
+        setTimeout(() => btn.innerText = 'คัดลอก', 2000);
+      });
+    }
+
+    function shareProfile() {
+      if (navigator.share) {
+        navigator.share({
+          title: `นามบัตรดิจิทัล - ${profile.name}`,
+          text: `ติดต่อ ${profile.name} (${profile.title})`,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert('คัดลอกลิงก์นามบัตรเรียบร้อยแล้ว!');
+      }
+    }
+
+    function openExchangeModal() {
+      document.getElementById('exchangeModal').classList.remove('hidden');
+    }
+    function closeExchangeModal() {
+      document.getElementById('exchangeModal').classList.add('hidden');
+    }
+
+    function handleExchangeSubmit(e) {
+      e.preventDefault();
+      const exName = document.getElementById('exName').value;
+      const exPhone = document.getElementById('exPhone').value;
+      alert(`ขอบคุณครับคุณ ${exName}!\nข้อมูลของคุณถูกบันทึกเรียบร้อยแล้ว เจ้าของบัตรจะติดต่อกลับในไม่ช้าครับ`);
+      closeExchangeModal();
+    }
+  </script>
+</body>
+</html>

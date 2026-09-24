@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ให้คะแนนรีวิว 5 ดาวบน Google Maps | TAPKARD™ Review Stand</title>
+  
+  <meta name="description" content="แตะปุ๊บ ให้คะแนนรีวิว 5 ดาวบน Google Maps ทันทีใน 3 วินาที สำหรับร้านค้าและลูกค้าคนสำคัญ">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Prompt', 'Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              google: '#4285F4',
+              yellow: '#FBBC05',
+              green: '#34A853',
+              red: '#EA4335'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 10%, #1e1b4b 0%, #09090b 80%);
+      min-height: 100vh;
+    }
+    .glass-card {
+      background: rgba(24, 24, 27, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .bounce-hover:hover {
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+
+<body class="text-slate-100 font-sans antialiased p-4 sm:p-6 pb-20 flex flex-col items-center justify-center min-h-screen">
+
+  <div class="w-full max-w-md space-y-4">
+    
+    <!-- Header Verified Google Partner Badge -->
+    <div class="flex items-center justify-center gap-2 py-1">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-slate-300 text-xs font-medium border border-white/10">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Google Maps Verified Review</span>
+      </span>
+    </div>
+
+    <!-- Main Card -->
+    <div class="glass-card rounded-3xl p-6 sm:p-8 text-center space-y-5 shadow-2xl relative overflow-hidden">
+      <!-- Glow background -->
+      <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-48 h-48 bg-yellow-500/20 blur-3xl rounded-full pointer-events-none"></div>
+
+      <!-- Store Logo & Welcome -->
+      <div class="space-y-2 relative z-10">
+        <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-300 p-1 shadow-xl">
+          <div class="w-full h-full bg-[#18181b] rounded-xl flex items-center justify-center text-yellow-400">
+            <i data-lucide="coffee" class="w-10 h-10"></i>
+          </div>
+        </div>
+
+        <h1 id="storeName" class="text-2xl font-extrabold text-white pt-2">The Artisan Coffee & Bakery</h1>
+        <p id="storeDesc" class="text-xs text-slate-300">
+          ขอบคุณที่แวะมาหาเราในวันนี้! ความประทับใจของคุณคือกำลังใจสูงสุดของทีมงาน
+        </p>
+      </div>
+
+      <!-- 5-Star Interactive Prompt -->
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-3 relative z-10">
+        <p class="text-xs font-semibold text-yellow-400 uppercase tracking-wider">แตะดาวเพื่อให้คะแนน 5 ดาว</p>
+        
+        <div class="flex justify-center gap-2 text-3xl sm:text-4xl text-yellow-400 cursor-pointer select-none">
+          <button onclick="handleRating(1)" class="hover:scale-125 transition-transform">★</button>
+          <button onclick="handleRating(2)" class="hover:scale-125 transition-transform">★</button>
+          <button onclick="handleRating(3)" class="hover:scale-125 transition-transform">★</button>
+          <button onclick="handleRating(4)" class="hover:scale-125 transition-transform">★</button>
+          <button onclick="handleRating(5)" class="hover:scale-125 transition-transform animate-pulse">★</button>
+        </div>
+
+        <p class="text-[11px] text-slate-400">แตะที่ดาว ระบบจะพาท่านไปยังหน้าเขียนรีวิวบน Google Maps ทันที</p>
+      </div>
+
+      <!-- Direct CTA Button -->
+      <div class="space-y-2 relative z-10">
+        <button id="btnGoReview" onclick="redirectGoogleReview()" class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-blue-600/30 flex items-center justify-center gap-2 transition-all active:scale-95">
+          <i data-lucide="external-link" class="w-4 h-4"></i>
+          <span>เปิดหน้า Google Review ทันที</span>
+        </button>
+      </div>
+
+      <!-- Quick Review Idea / Copy Templates -->
+      <div class="text-left space-y-2.5 pt-3 border-t border-white/10 relative z-10">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">ไอเดียข้อความรีวิว (แตะเพื่อคัดลอก)</span>
+          <span id="copyToast" class="text-[10px] text-emerald-400 hidden font-semibold">คัดลอกแล้ว! ไปวางได้เลย</span>
+        </div>
+
+        <div class="space-y-1.5">
+          <button onclick="copyTemplate(this)" class="w-full text-left p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-xs text-slate-300 transition-colors flex items-center justify-between group">
+            <span class="truncate">"บรรยากาศดีมาก บริการประทับใจ แนะนำเลยครับ 5 ดาว ⭐⭐⭐⭐⭐"</span>
+            <i data-lucide="copy" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white shrink-0 ml-2"></i>
+          </button>
+          <button onclick="copyTemplate(this)" class="w-full text-left p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-xs text-slate-300 transition-colors flex items-center justify-between group">
+            <span class="truncate">"รสชาติดี คุ้มค่าราคา พนักงานน่ารักมาก กลับมาซ้ำแน่นอน!"</span>
+            <i data-lucide="copy" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white shrink-0 ml-2"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Reward / Incentive Box -->
+      <div class="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/40 to-teal-950/40 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-3 text-left">
+        <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-400">
+          <i data-lucide="gift" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <p class="font-bold text-white text-xs">ขอบคุณที่รีวิว 5 ดาวให้เรา!</p>
+          <p class="text-[11px] text-emerald-200/80">แสดงหน้านี้ที่เคาน์เตอร์คิดเงิน เพื่อรับสิทธิ์ส่วนลดพิเศษ 10% หรือของขวัญจากทางร้าน</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center pt-2 space-y-1">
+      <p class="text-[10px] text-slate-500">Smart Review Stand Powered by TAPKARD™ Technology</p>
+      <a href="index.html" class="text-[11px] text-blue-400 hover:underline">สั่งทำป้ายแตะรีวิว NFC สำหรับร้านของคุณ</a>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Default or URL parameter based
+    let storeName = "The Artisan Coffee & Bakery";
+    let reviewUrl = "https://search.google.com/local/writereview?placeid=ChIJ02lE3dWe4jARy7-eXwJt-mU"; // Sample Place ID
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('store')) {
+      storeName = params.get('store');
+      document.getElementById('storeName').innerText = storeName;
+    }
+    if (params.get('review_url')) {
+      reviewUrl = params.get('review_url');
+    }
+
+    function redirectGoogleReview() {
+      window.location.href = reviewUrl;
+    }
+
+    function handleRating(stars) {
+      if (stars >= 4) {
+        alert(`🌟 ขอบคุณสำหรับคะแนน ${stars} ดาวครับ!\nกำลังนำท่านเข้าสู่ Google Maps เพื่อยืนยันรีวิว...`);
+        redirectGoogleReview();
+      } else {
+        alert(`ขอบคุณสำหรับข้อเสนอแนะ ${stars} ดาวครับ!\nเราจะนำความคิดเห็นของคุณไปปรับปรุงบริการให้ดียิ่งขึ้นครับ`);
+      }
+    }
+
+    function copyTemplate(btn) {
+      const text = btn.querySelector('span').innerText.replace(/"/g, '');
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('copyToast');
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 2500);
+      });
+    }
+  </script>
+</body>
+</html>

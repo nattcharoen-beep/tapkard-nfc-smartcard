@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAPKARD™ | นามบัตรดิจิทัล NFC & ป้ายแตะรีวิว Google 5 ดาว แตะปุ๊บ วาร์ปปั๊บ</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="TAPKARD™ นามบัตรอัจฉริยะ NFC สำหรับผู้บริหาร เซลล์ และป้ายแตะรีวิว Google Maps 5 ดาว สำหรับร้านอาหาร คาเฟ่ คลินิก แตะปุ๊บเปิดหน้าโปรไฟล์ทันที ไม่ต้องโหลดแอป">
+  <meta name="keywords" content="นามบัตรดิจิทัล, บัตร nfc, smart business card, ป้ายแตะรีวิว google, เพิ่มรีวิว google maps 5 ดาว, นามบัตร nfc ราคา, นามบัตรแตะมือถือ">
+  <meta name="author" content="TAPKARD">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TAPKARD™ | นามบัตรดิจิทัล NFC & ป้ายแตะรีวิว Google 5 ดาว">
+  <meta property="og:description" content="แตะปุ๊บ วาร์ปปั๊บ นามบัตรใบสุดท้ายที่คุณต้องพกตลอดชีวิต และป้ายแตะรีวิวที่ช่วยเพิ่มยอด 5 ดาวหน้าร้านใน 1 วินาที">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Prompt & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Prompt', 'Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              gold: '#E5C07B',
+              accent: '#06b6d4',
+              emerald: '#10b981',
+              dark: '#0B0F19',
+              card: '#111827',
+              border: '#1F2937'
+            }
+          },
+          animation: {
+            'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'ripple': 'ripple 1.5s linear infinite',
+          },
+          keyframes: {
+            pulseGlow: {
+              '0%, 100%': { opacity: 0.6, transform: 'scale(1)' },
+              '50%': { opacity: 1, transform: 'scale(1.05)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            ripple: {
+              '0%': { transform: 'scale(0.8)', opacity: 1 },
+              '100%': { transform: 'scale(2.2)', opacity: 0 },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Glassmorphism & Card 3D effects */
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .card-perspective {
+      perspective: 1200px;
+    }
+    .card-preserve-3d {
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 50%, #F472B6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nfc-wave {
+      position: absolute;
+      border: 2px solid #3b82f6;
+      border-radius: 50%;
+      animation: ripple 1.8s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+  </style>
+
+  <!-- JSON-LD Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "TAPKARD™ Smart NFC Business Card & Google Review Stand",
+    "image": "https://tapkard.com/og-image.jpg",
+    "description": "นามบัตรอัจฉริยะระบบ NFC สำหรับบุคคล เซลล์ และป้ายแตะรีวิว Google Maps สำหรับร้านค้า คลินิก ร้านอาหาร แตะมือถือเด้งทันที",
+    "brand": {
+      "@type": "Brand",
+      "name": "TAPKARD"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://tapkard.com",
+      "priceCurrency": "THB",
+      "price": "390.00",
+      "availability": "https://schema.org/InStock"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "1280"
+    }
+  }
+  </script>
+</head>
+
+<body class="bg-brand-dark text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white relative overflow-x-hidden">
+
+  <!-- Ambient Glow Background -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-blue-600/20 blur-[140px] rounded-full"></div>
+    <div class="absolute top-1/3 -left-40 w-[500px] h-[500px] bg-cyan-500/10 blur-[130px] rounded-full"></div>
+    <div class="absolute bottom-10 right-0 w-[600px] h-[600px] bg-purple-600/15 blur-[160px] rounded-full"></div>
+  </div>
+
+  <!-- Announcement Top Banner -->
+  <div class="relative z-50 bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-700 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium shadow-md">
+    <span>🔥 โปรโมชั่นเปิดตัว: สั่งซื้อวันนี้รับส่วนลดทันที 50 บาท โค้ด: <strong class="bg-white/20 px-2 py-0.5 rounded text-yellow-300 font-mono">VIP50</strong> | จัดส่งฟรีทั่วประเทศ</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-40 glass-panel border-b border-white/5 py-4 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
+          <i data-lucide="radio" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <span class="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center">TAPKARD<span class="text-blue-400 text-xs ml-1">™</span></span>
+          <span class="text-[10px] text-slate-400 tracking-wider block -mt-1 uppercase">Smart NFC Technology</span>
+        </div>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6 text-sm text-slate-300">
+        <a href="#simulator" class="hover:text-blue-400 transition-colors">ลองแตะเสมือนจริง</a>
+        <a href="profile.html" target="_blank" class="hover:text-blue-400 transition-colors flex items-center gap-1">
+          <i data-lucide="user" class="w-3.5 h-3.5 text-blue-400"></i> นามบัตรจริง
+        </a>
+        <a href="review.html" target="_blank" class="hover:text-yellow-400 transition-colors flex items-center gap-1">
+          <i data-lucide="star" class="w-3.5 h-3.5 text-yellow-400"></i> ป้ายรีวิวจริง
+        </a>
+        <a href="builder.html" class="hover:text-emerald-400 transition-colors flex items-center gap-1">
+          <i data-lucide="sliders" class="w-3.5 h-3.5 text-emerald-400"></i> ระบบสร้างการ์ด
+        </a>
+        <a href="#pricing" class="hover:text-blue-400 transition-colors">ราคาและแพ็กเกจ</a>
+        <a href="#faq" class="hover:text-blue-400 transition-colors">FAQ</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="#pricing" class="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold shadow-lg shadow-blue-600/30 transition-all hover:scale-105 flex items-center gap-2">
+          <span>สั่งทำบัตรของคุณ</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative z-10 pt-12 pb-20 px-4 sm:px-8 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Hero Copy -->
+      <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs sm:text-sm font-medium">
+          <span class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span>
+          <span>เทคโนโลยี Smart NFC แตะปุ๊บ วาร์ปปั๊บ 1 วินาที</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight">
+          นามบัตรใบสุดท้าย <br class="hidden sm:block">
+          <span class="text-gradient">ที่คุณต้องพกตลอดชีวิต</span>
+        </h1>
+
+        <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+          เลิกพกนามบัตรกระดาษเป็นปึกๆ ที่ข้อมูลเปลี่ยนก็ต้องทิ้ง! และแก้ปัญหาลูกค้าบอกจะรีวิว Google ให้ แต่เดินออกจากร้านแล้วลืม ด้วย <strong class="text-white">TAPKARD™</strong> การ์ดอัจฉริยะและป้ายแตะรีวิวหน้าร้าน แตะหลังมือถือปุ๊บ ข้อมูลเด้งปั๊บ <strong>ไม่ต้องโหลดแอปแม้แต่คนเดียว!</strong>
+        </p>
+
+        <!-- Product Mode Selector Tabs -->
+        <div class="p-1.5 glass-panel rounded-2xl inline-flex max-w-md w-full justify-between shadow-xl">
+          <button id="tabPersonal" onclick="switchProductMode('personal')" class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 bg-blue-600 text-white shadow-md">
+            <i data-lucide="user" class="w-4 h-4"></i>
+            <span>สำหรับบุคคล & เซลล์</span>
+          </button>
+          <button id="tabBusiness" onclick="switchProductMode('business')" class="flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white">
+            <i data-lucide="store" class="w-4 h-4"></i>
+            <span>ป้ายรีวิว Google ร้านค้า</span>
+          </button>
+        </div>
+
+        <!-- Hero CTAs -->
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+          <a href="#pricing" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-xl shadow-blue-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2">
+            <span>สั่งซื้อเลย (เริ่มต้น ฿390)</span>
+            <i data-lucide="sparkles" class="w-4 h-4 text-yellow-300"></i>
+          </a>
+          <a href="#simulator" class="w-full sm:w-auto px-7 py-3.5 rounded-full glass-panel hover:bg-white/10 text-slate-200 font-semibold text-base transition-all flex items-center justify-center gap-2">
+            <i data-lucide="play-circle" class="w-5 h-5 text-blue-400"></i>
+            <span>ทดลองแตะการ์ดจำลอง</span>
+          </a>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="pt-6 border-t border-white/10 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-slate-400">
+          <div class="flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+            <span>รองรับ iPhone & Android 100%</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+            <span>แก้ไขข้อมูลออนไลน์ได้ตลอดชีพ</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="truck" class="w-4 h-4 text-emerald-400"></i>
+            <span>ส่งฟรี มีเก็บเงินปลายทาง</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Interactive 3D Card Simulator -->
+      <div id="simulator" class="lg:col-span-5 flex flex-col items-center">
+        <div class="relative w-full max-w-[360px] sm:max-w-[400px]">
+          
+          <!-- Ripple Waves behind card -->
+          <div id="nfcWave" class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full border border-blue-400/50 animate-ping pointer-events-none"></div>
+
+          <!-- Physical Card Preview Container -->
+          <div class="card-perspective">
+            <div id="smartCard" class="card-preserve-3d relative w-full h-[220px] sm:h-[240px] rounded-3xl p-6 shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer border border-white/15 bg-gradient-to-br from-neutral-900 via-neutral-950 to-black animate-float" onclick="triggerTapDemo()">
+              
+              <!-- Subtle Hologram Mesh / Shine -->
+              <div class="absolute -right-20 -top-20 w-52 h-52 bg-gradient-to-bl from-blue-500/20 via-purple-500/10 to-transparent rounded-full blur-2xl"></div>
+              
+              <!-- Top Card Info -->
+              <div class="flex items-start justify-between relative z-10">
+                <div class="flex items-center gap-3">
+                  <div id="cardLogoBadge" class="w-10 h-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center font-bold text-white shadow-inner">
+                    <i id="cardIcon" data-lucide="contact" class="w-5 h-5 text-blue-400"></i>
+                  </div>
+                  <div>
+                    <h3 id="cardCompany" class="text-xs uppercase tracking-widest text-slate-400 font-semibold">TAPKARD ENTERPRISE</h3>
+                    <p id="cardTagline" class="text-[10px] text-blue-400 font-mono">SMART NFC SYSTEM</p>
+                  </div>
+                </div>
+                <div class="flex flex-col items-end">
+                  <i data-lucide="radio" class="w-6 h-6 text-white/70 animate-pulse"></i>
+                  <span class="text-[9px] text-slate-400 font-mono tracking-tighter mt-1">NFC TAP</span>
+                </div>
+              </div>
+
+              <!-- Center/Middle Content (Changes between Personal & Review Stand) -->
+              <div class="mt-7 sm:mt-9 relative z-10">
+                <h2 id="cardHolderName" class="text-xl sm:text-2xl font-bold text-white tracking-wide">ณัฐพงษ์ เจริญทรัพย์</h2>
+                <p id="cardHolderTitle" class="text-xs sm:text-sm text-slate-300 font-medium">Managing Director & Founder</p>
+                <p id="cardContactPreview" class="text-[11px] text-blue-400/90 font-mono mt-1">tapkard.me/nattapong</p>
+              </div>
+
+              <!-- Bottom Card Details -->
+              <div class="absolute bottom-5 left-6 right-6 flex items-center justify-between border-t border-white/10 pt-3 relative z-10">
+                <div class="flex items-center gap-1.5 text-[10px] text-slate-400 font-mono">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span id="cardStatus">READY TO TAP</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] text-slate-400 font-mono uppercase">LIFETIME ACCESS</span>
+                  <div class="w-6 h-6 rounded bg-white/10 flex items-center justify-center">
+                    <i data-lucide="qr-code" class="w-4 h-4 text-slate-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tap Simulation Prompt Button -->
+          <div class="mt-6 text-center">
+            <button onclick="triggerTapDemo()" class="px-6 py-2.5 rounded-full glass-panel hover:bg-blue-600/30 border border-blue-400/40 text-blue-300 hover:text-white text-xs sm:text-sm font-semibold transition-all inline-flex items-center gap-2 shadow-lg">
+              <i data-lucide="touchpad" class="w-4 h-4"></i>
+              <span>คลิกที่บัตรเพื่อทดลองแตะ (Live Demo)</span>
+            </button>
+          </div>
+
+          <!-- Smartphone Screen Simulator (Pop-up on Tap) -->
+          <div id="phoneModal" class="hidden mt-4 p-4 glass-panel rounded-3xl border border-blue-500/40 shadow-2xl transition-all duration-300 animate-in fade-in zoom-in-95">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-xs text-slate-300 font-medium font-mono">NFC Tag Detected (100ms)</span>
+              </div>
+              <button onclick="closePhoneModal()" class="text-slate-400 hover:text-white text-xs"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            
+            <div id="phoneScreenContent" class="py-3">
+              <!-- Content injected by JS -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Live Order Notification Ticker -->
+  <div class="bg-brand-card/70 border-y border-white/5 py-3 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between text-xs text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span class="text-slate-300 font-semibold">อัปเดตคำสั่งซื้อล่าสุด:</span>
+        <span id="orderTicker" class="text-blue-400 transition-all duration-500 font-medium">คุณธนกร (เชียงใหม่) เพิ่งสั่งซื้อ ป้ายแตะรีวิว Google 2 ชุด</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-4 text-slate-400 font-mono text-[11px]">
+        <span>⚡ 100,000+ Taps Supported</span>
+        <span>🛡️ IP67 Waterproof</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- The 2 Big Solutions Section -->
+  <section id="models" class="py-20 px-4 sm:px-8 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+      <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-blue-400">2 ผลิตภัณฑ์หลัก ตอบโจทย์ครบทุกความต้องการ</h2>
+      <p class="text-3xl sm:text-4xl font-extrabold text-white">เลือกรูปแบบที่เหมาะกับคุณหรือธุรกิจของคุณ</p>
+      <p class="text-slate-400 text-sm sm:text-base">ไม่ว่าจะเป็นการสร้างความประทับใจส่วนตัว หรือการปั๊มยอดรีวิว 5 ดาวให้ร้านค้าของคุณติดหน้าแรก</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Option 1: Personal Smart Card -->
+      <div class="glass-panel rounded-3xl p-8 border border-white/10 hover:border-blue-500/50 transition-all group flex flex-col justify-between relative overflow-hidden">
+        <div class="space-y-6">
+          <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+            <i data-lucide="user-check" class="w-7 h-7"></i>
+          </div>
+          <div>
+            <span class="text-xs font-mono text-blue-400 uppercase tracking-widest">FOR PROFESSIONALS & SALES</span>
+            <h3 class="text-2xl font-bold text-white mt-1">นามบัตรดิจิทัล NFC (Personal Pro Card)</h3>
+            <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+              สำหรับผู้บริหาร นักธุรกิจ เซลล์อสังหาฯ เซลล์ขายรถ ประกัน และฟรีแลนซ์ แตะมือถือลูกค้าแล้วเบอร์โทร อีเมล LINE IG และปุ่มกดบันทึก Contact เซฟลงสมุดโทรศัพท์ทันทีใน 1 วิ!
+            </p>
+          </div>
+
+          <ul class="space-y-3 text-sm text-slate-300">
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+              <span>เซฟเบอร์เข้าโทรศัพท์ลูกค้าได้ทันที (Save to Contacts .vcf)</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+              <span>ย้ายบริษัท เปลี่ยนเบอร์ แก้ไขข้อมูลออนไลน์ได้ตลอดชีพ ไม่ต้องซื้อบัตรใหม่</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+              <span>สกรีนชื่อ ตำแหน่ง โลโก้บริษัท สีดำด้านพรีเมียม (Matte Luxury)</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="pt-8 mt-8 border-t border-white/10 flex items-center justify-between">
+          <div>
+            <span class="text-xs text-slate-400 block">เริ่มต้นเพียง</span>
+            <span class="text-2xl font-black text-white">฿390</span>
+            <span class="text-xs text-slate-500 line-through ml-1">฿690</span>
+          </div>
+          <button onclick="selectPackage('personal')" class="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all flex items-center gap-2">
+            <span>สั่งทำบัตรบุคคล</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Option 2: Google Review Tap Stand -->
+      <div class="glass-panel rounded-3xl p-8 border border-white/10 hover:border-yellow-500/50 transition-all group flex flex-col justify-between relative overflow-hidden bg-gradient-to-b from-neutral-900/60 to-yellow-950/10">
+        <div class="absolute top-4 right-4 bg-yellow-500/20 border border-yellow-500/40 text-yellow-300 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+          Best Seller for Stores
+        </div>
+
+        <div class="space-y-6">
+          <div class="w-14 h-14 rounded-2xl bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 group-hover:scale-110 transition-transform">
+            <i data-lucide="star" class="w-7 h-7"></i>
+          </div>
+          <div>
+            <span class="text-xs font-mono text-yellow-400 uppercase tracking-widest">FOR RESTAURANTS, CAFES & CLINICS</span>
+            <h3 class="text-2xl font-bold text-white mt-1">ป้ายแตะรีวิว Google 5 ดาว (Review Tap Stand)</h3>
+            <p class="text-slate-400 text-sm mt-2 leading-relaxed">
+              สำหรับร้านอาหาร คาเฟ่ คลินิกความงาม สปา โรงแรม และหน้าร้านบริการ วางไว้ที่โต๊ะเก็บเงิน ลูกค้าแตะมือถือปุ๊บ หน้าให้คะแนน 5 ดาวของ Google เด้งขึ้นมาตรงหน้าทันที เพิ่มรีวิวเร็วขึ้น 10 เท่า!
+            </p>
+          </div>
+
+          <ul class="space-y-3 text-sm text-slate-300">
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+              <span>แตะแล้วเปิดหน้า 5-Star Rating ของ Google Maps ทันที ไม่ต้องพิมพ์ค้นหาร้าน</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+              <span>มีทั้งแบบการ์ดพกพา และแบบป้ายตั้งโต๊ะอะคริลิกหน้าร้านสุดหรู</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+              <span>ช่วยดันร้านค้าของคุณติดหน้าแรกบน Google Search & Maps ทันที</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="pt-8 mt-8 border-t border-white/10 flex items-center justify-between">
+          <div>
+            <span class="text-xs text-slate-400 block">เริ่มต้นเพียง</span>
+            <span class="text-2xl font-black text-yellow-400">฿490</span>
+            <span class="text-xs text-slate-500 line-through ml-1">฿890</span>
+          </div>
+          <button onclick="selectPackage('business')" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-black font-bold text-sm transition-all flex items-center gap-2">
+            <span>สั่งทำป้ายรีวิวหน้าร้าน</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Comparison Section -->
+  <section class="py-16 px-4 sm:px-8 max-w-5xl mx-auto">
+    <div class="text-center space-y-3 mb-12">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white">ทำไมมืออาชีพถึงเปลี่ยนมาใช้ TAPKARD™?</h2>
+      <p class="text-slate-400 text-sm">ตารางเปรียบเทียบความคุ้มค่าแบบตรงไปตรงมา</p>
+    </div>
+
+    <div class="glass-panel rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+      <div class="grid grid-cols-12 bg-white/5 py-4 px-6 text-xs sm:text-sm font-bold border-b border-white/10">
+        <div class="col-span-6 sm:col-span-5 text-slate-300">ฟังก์ชันการใช้งาน</div>
+        <div class="col-span-3 sm:col-span-3 text-center text-red-400">นามบัตรกระดาษเดิม</div>
+        <div class="col-span-3 sm:col-span-4 text-center text-emerald-400">TAPKARD™ Smart Card</div>
+      </div>
+
+      <div class="divide-y divide-white/5 text-xs sm:text-sm">
+        <div class="grid grid-cols-12 py-3.5 px-6 items-center">
+          <div class="col-span-6 sm:col-span-5 text-slate-300">ความเร็วในการส่งข้อมูล</div>
+          <div class="col-span-3 sm:col-span-3 text-center text-slate-500">ต้องยืนพิมพ์เบอร์/สแกนช้า</div>
+          <div class="col-span-3 sm:col-span-4 text-center text-emerald-400 font-bold">แตะ 1 วินาที ข้อมูลเด้งทันที ⚡</div>
+        </div>
+        <div class="grid grid-cols-12 py-3.5 px-6 items-center">
+          <div class="col-span-6 sm:col-span-5 text-slate-300">เมื่อข้อมูลเปลี่ยน/ย้ายตำแหน่ง</div>
+          <div class="col-span-3 sm:col-span-3 text-center text-red-400">ต้องทิ้งทั้งกล่อง สั่งพิมพ์ใหม่</div>
+          <div class="col-span-3 sm:col-span-4 text-center text-emerald-400 font-bold">แก้ไขออนไลน์ฟรีตลอดชีพ 🔄</div>
+        </div>
+        <div class="grid grid-cols-12 py-3.5 px-6 items-center">
+          <div class="col-span-6 sm:col-span-5 text-slate-300">ความทนทานต่อน้ำและความชื้น</div>
+          <div class="col-span-3 sm:col-span-3 text-center text-red-400">โดนน้ำแล้วเปื่อย ยับ ฉีกขาด</div>
+          <div class="col-span-3 sm:col-span-4 text-center text-emerald-400 font-bold">กันน้ำ 100% พลาสติก PVC พรีเมียม 🛡️</div>
+        </div>
+        <div class="grid grid-cols-12 py-3.5 px-6 items-center">
+          <div class="col-span-6 sm:col-span-5 text-slate-300">การเก็บรักษาของผู้รับ</div>
+          <div class="col-span-3 sm:col-span-3 text-center text-red-400">88% ทำหายหรือทิ้งถังขยะ</div>
+          <div class="col-span-3 sm:col-span-4 text-center text-emerald-400 font-bold">เซฟเบอร์ตรงเข้ามือถือทันที 📲</div>
+        </div>
+        <div class="grid grid-cols-12 py-3.5 px-6 items-center">
+          <div class="col-span-6 sm:col-span-5 text-slate-300">ความประทับใจและความน่าเชื่อถือ</div>
+          <div class="col-span-3 sm:col-span-3 text-center text-slate-400">ธรรมดาเหมือนคนทั่วไป</div>
+          <div class="col-span-3 sm:col-span-4 text-center text-emerald-400 font-bold">ดูล้ำ มีระดับ ลูกค้าต้องร้องว้าว 🌟</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Customizer & Pricing Section -->
+  <section id="pricing" class="py-20 px-4 sm:px-8 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+      <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-blue-400">แพ็กเกจ & โปรโมชั่นพิเศษ</h2>
+      <p class="text-3xl sm:text-4xl font-extrabold text-white">เลือกแพ็กเกจที่ต้องการสั่งทำวันนี้</p>
+      <p class="text-slate-400 text-sm sm:text-base">ราคารวมสกรีนชื่อหรือโลโก้ พร้อมระบบหลังบ้านอัปเดตข้อมูลฟรีตลอดชีพ</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+      
+      <!-- Card 1: Single Pro Card -->
+      <div class="glass-panel rounded-3xl p-7 border border-white/10 flex flex-col justify-between hover:border-blue-500/40 transition-all">
+        <div class="space-y-4">
+          <span class="text-xs font-mono text-slate-400 uppercase">STARTER PERSONAL</span>
+          <h3 class="text-xl font-bold text-white">นามบัตรดิจิทัล 1 ใบ</h3>
+          <p class="text-xs text-slate-400">เหมาะสำหรับบุคคล เซลล์ ฟรีแลนซ์ และผู้บริหาร</p>
+          <div class="py-2">
+            <span class="text-4xl font-extrabold text-white">฿390</span>
+            <span class="text-sm text-slate-500 line-through ml-2">฿690</span>
+          </div>
+          <ul class="space-y-2.5 text-xs text-slate-300 pt-3 border-t border-white/10">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>บัตร PVC Matte Black สกรีนชื่อ</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>ชิป NFC NTAG คุณภาพสูงแตะเร็ว</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>QR Code สำรองด้านหลังบัตร</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>หน้าโปรไฟล์ส่วนตัว Bento/Linktree</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>ส่งฟรีทั่วประเทศ</span></li>
+          </ul>
+        </div>
+        <button onclick="openOrderModal('single_card', 390, 'นามบัตรดิจิทัล NFC 1 ใบ')" class="mt-8 w-full py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-semibold transition-all">
+          สั่งซื้อชุดนี้
+        </button>
+      </div>
+
+      <!-- Card 2: Google Review Tap Stand (POPULAR) -->
+      <div class="glass-panel rounded-3xl p-7 border-2 border-yellow-500/70 relative flex flex-col justify-between shadow-2xl bg-gradient-to-b from-neutral-900 to-yellow-950/20 transform md:-translate-y-2">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-500 to-amber-500 text-black text-[11px] font-bold px-4 py-0.5 rounded-full uppercase tracking-wider shadow-lg">
+          🔥 นิยมสูงสุดสำหรับร้านค้า
+        </div>
+        <div class="space-y-4">
+          <span class="text-xs font-mono text-yellow-400 uppercase">LOCAL BUSINESS FAVORITE</span>
+          <h3 class="text-xl font-bold text-white">ป้ายตั้งโต๊ะรีวิว Google 5 ดาว</h3>
+          <p class="text-xs text-slate-400">แผ่นอะคริลิกใสตั้งโต๊ะหน้าร้าน สำหรับร้านอาหาร คาเฟ่ คลินิก</p>
+          <div class="py-2">
+            <span class="text-4xl font-extrabold text-yellow-400">฿490</span>
+            <span class="text-sm text-slate-500 line-through ml-2">฿890</span>
+          </div>
+          <ul class="space-y-2.5 text-xs text-slate-300 pt-3 border-t border-white/10">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-yellow-400"></i><span>ป้ายอะคริลิกใสทรง L วางโต๊ะคิดเงิน</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-yellow-400"></i><span>ฝังชิป NFC แตะปุ๊บเปิดหน้า 5 ดาวของ Google</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-yellow-400"></i><span>สกรีนชื่อร้าน/โลโก้ร้านของคุณ</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-yellow-400"></i><span>แถมฟรี! สติกเกอร์ NFC แปะจุดเสริม 1 ชิ้น</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-yellow-400"></i><span>เพิ่มยอดรีวิวร้านติดหน้าแรก Google Maps</span></li>
+          </ul>
+        </div>
+        <button onclick="openOrderModal('review_stand', 490, 'ป้ายตั้งโต๊ะรีวิว Google 5 ดาว')" class="mt-8 w-full py-3 rounded-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black text-sm font-bold shadow-lg shadow-yellow-500/30 transition-all hover:scale-105">
+          สั่งซื้อชุดป้ายรีวิวหน้าร้าน
+        </button>
+      </div>
+
+      <!-- Card 3: Business Complete Bundle -->
+      <div class="glass-panel rounded-3xl p-7 border border-white/10 flex flex-col justify-between hover:border-purple-500/40 transition-all">
+        <div class="space-y-4">
+          <span class="text-xs font-mono text-purple-400 uppercase">ALL-IN-ONE BUNDLE</span>
+          <h3 class="text-xl font-bold text-white">ชุดคอมโบ้ (ป้าย 2 + บัตร 2)</h3>
+          <p class="text-xs text-slate-400">ครบเซ็ตสำหรับธุรกิจ มีทั้งป้ายหน้าร้านและบัตรพกพา</p>
+          <div class="py-2">
+            <span class="text-4xl font-extrabold text-white">฿1,390</span>
+            <span class="text-sm text-slate-500 line-through ml-2">฿2,290</span>
+          </div>
+          <ul class="space-y-2.5 text-xs text-slate-300 pt-3 border-t border-white/10">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>ป้ายอะคริลิกรีวิวหน้าร้าน 2 ชิ้น (2 เคาน์เตอร์)</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>นามบัตรดิจิทัล NFC สกรีนชื่อ 2 ใบ</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>บริการตั้งค่าลิงก์ร้านค้าและโปรไฟล์ให้ครบ</span></li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>รับประกันสินค้า 1 ปีเต็ม</span></li>
+          </ul>
+        </div>
+        <button onclick="openOrderModal('combo_bundle', 1390, 'ชุดคอมโบ้ (ป้ายรีวิว 2 + บัตร 2)') class="mt-8 w-full py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-semibold transition-all">
+          สั่งซื้อชุดคอมโบ้
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ Accordion Section -->
+  <section id="faq" class="py-16 px-4 sm:px-8 max-w-4xl mx-auto">
+    <div class="text-center space-y-3 mb-12">
+      <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-blue-400">ข้อสงสัยที่พบบ่อย</h2>
+      <p class="text-3xl font-extrabold text-white">คำถามที่ลูกค้าถามบ่อยที่สุด</p>
+    </div>
+
+    <div class="space-y-4">
+      
+      <div class="glass-panel rounded-2xl p-5 border border-white/10">
+        <button onclick="toggleFaq(1)" class="w-full flex items-center justify-between text-left font-semibold text-white text-base">
+          <span>1. มือถือของผู้รับ ต้องมีรุ่นไหนบ้าง ถึงจะแตะได้?</span>
+          <i id="faqIcon1" data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+        </button>
+        <p id="faqAns1" class="hidden text-sm text-slate-300 mt-3 leading-relaxed border-t border-white/10 pt-3">
+          <strong>iPhone:</strong> รองรับตั้งแต่รุ่น iPhone XS, XR, 11, 12, 13, 14, 15, 16 ขึ้นไป แตะได้ทันทีโดยไม่ต้องเปิดแอปใดๆ ทั้งสิ้น<br>
+          <strong>Android:</strong> รองรับสมาร์ตโฟนเกือบทุกรุ่นที่มีระบบ NFC (เช่น Samsung, Xiaomi, Oppo, Vivo) เพียงเปิด NFC ในการตั้งค่า<br>
+          <em>*นอกจากนี้ ด้านหลังบัตรของเรามี QR Code สำรองไว้เสมอ สำหรับกรณีที่โทรศัพท์รุ่นเก่ามากๆ ที่ไม่มี NFC ก็เปิดกล้องสแกนได้ทันทีครับ*</em>
+        </p>
+      </div>
+
+      <div class="glass-panel rounded-2xl p-5 border border-white/10">
+        <button onclick="toggleFaq(2)" class="w-full flex items-center justify-between text-left font-semibold text-white text-base">
+          <span>2. ถ้าเปลี่ยนเบอร์โทร หรือเปลี่ยนที่ทำงาน ต้องซื้อบัตรใหม่มั้ย?</span>
+          <i id="faqIcon2" data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+        </button>
+        <p id="faqAns2" class="hidden text-sm text-slate-300 mt-3 leading-relaxed border-t border-white/10 pt-3">
+          <strong>ไม่ต้องซื้อใหม่ครับ!</strong> นี่คือข้อดีที่สุดของ TAPKARD คุณสามารถล็อกอินเข้าระบบผ่านมือถือ เพื่อแก้ไขเบอร์โทร, เพิ่ม LINE, เปลี่ยนชื่อตำแหน่ง หรืออัปเดตลิงก์ใหม่ได้ตลอดเวลาฟรีตลอดชีพ เมื่อแก้ไขแล้ว บัตรเดิมก็จะแตะแล้วแสดงข้อมูลใหม่ทันที
+        </p>
+      </div>
+
+      <div class="glass-panel rounded-2xl p-5 border border-white/10">
+        <button onclick="toggleFaq(3)" class="w-full flex items-center justify-between text-left font-semibold text-white text-base">
+          <span>3. มีความเสี่ยงเรื่องการดูดเงิน หรือความปลอดภัยของข้อมูลมั้ย?</span>
+          <i id="faqIcon3" data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+        </button>
+        <p id="faqAns3" class="hidden text-sm text-slate-300 mt-3 leading-relaxed border-t border-white/10 pt-3">
+          <strong>ปลอดภัย 100% ครับ!</strong> ชิป NFC ในบัตรทำหน้าที่เพียงอย่างเดียวคือส่ง "ลิงก์เว็บไซต์ (URL)" ไปยังเบราว์เซอร์ของมือถือผู้รับเท่านั้น ไม่มีระบบการทำธุรกรรมทางการเงิน ไม่สามารถดูดเงิน และไม่สามารถเข้าถึงข้อมูลลับในโทรศัพท์ของผู้แตะได้ครับ
+        </p>
+      </div>
+
+      <div class="glass-panel rounded-2xl p-5 border border-white/10">
+        <button onclick="toggleFaq(4)" class="w-full flex items-center justify-between text-left font-semibold text-white text-base">
+          <span>4. ป้ายรีวิว Google 5 ดาว ช่วยให้ร้านติดหน้าแรก Google ได้ยังไง?</span>
+          <i id="faqIcon4" data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+        </button>
+        <p id="faqAns4" class="hidden text-sm text-slate-300 mt-3 leading-relaxed border-t border-white/10 pt-3">
+          อัลกอริทึมของ Google Maps จะดันร้านที่มี <strong>จำนวนรีวิวสม่ำเสมอและได้คะแนน 4.8 - 5.0 ดาว</strong> ขึ้นมาแสดงผลเป็นอันดับแรกๆ ในย่านนั้นเสมอ ป้าย TAPKARD ช่วยตัดขั้นตอนความยุ่งยาก ลูกค้าไม่ต้องค้นหาชื่อร้าน แค่แตะปุ๊บก็กด 5 ดาวได้ทันทีก่อนเดินออกจากร้าน ทำให้ยอดรีวิวพุ่งขึ้นอย่างรวดเร็ว
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Checkout & Order Modal -->
+  <div id="orderModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-blue-500/30 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeOrderModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+
+      <div class="text-left space-y-1 mb-6">
+        <span class="text-xs text-blue-400 font-mono uppercase tracking-wider">TAPKARD SECURE CHECKOUT</span>
+        <h3 id="modalPackageTitle" class="text-xl sm:text-2xl font-bold text-white">สั่งซื้อสินค้า</h3>
+        <p id="modalPackagePrice" class="text-lg font-bold text-emerald-400">฿390.00 (รวมส่งฟรี)</p>
+      </div>
+
+      <form id="orderForm" onsubmit="handleOrderSubmit(event)" class="space-y-4 text-left text-xs sm:text-sm">
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">ชื่อ-นามสกุล ที่จะให้สกรีนบนบัตร / หรือชื่อร้านค้า</label>
+          <input type="text" id="custName" required placeholder="เช่น นายวรภัทร หรือ ร้าน The Coffee Bar" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">ตำแหน่ง หรือ สโลแกน (ถ้ามี)</label>
+          <input type="text" id="custTitle" placeholder="เช่น Sales Director หรือ Specialty Cafe & Roastery" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">ลิงก์ที่ต้องการให้แตะแล้วเปิด (เช่น ลิงก์ร้าน, LINE OA, หรือ Google Maps)</label>
+          <input type="text" id="custLink" placeholder="เช่น https://maps.app.goo.gl/... หรือ line.me/ti/p/..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">เบอร์โทรศัพท์ผู้รับ</label>
+            <input type="tel" id="custPhone" required placeholder="08x-xxx-xxxx" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-medium mb-1">โค้ดส่วนลด</label>
+            <div class="flex gap-2">
+              <input type="text" id="discountCode" placeholder="VIP50" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white uppercase focus:outline-none focus:border-blue-500">
+              <button type="button" onclick="applyDiscount()" class="px-3 py-2 bg-blue-600 rounded-xl text-xs font-bold text-white hover:bg-blue-500">ใช้</button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">ที่อยู่จัดส่งสินค้า</label>
+          <textarea id="custAddress" required rows="2" placeholder="บ้านเลขที่, แขวง/ตำบล, เขต/อำเภอ, จังหวัด, รหัสไปรษณีย์" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-blue-500"></textarea>
+        </div>
+
+        <div class="pt-2">
+          <label class="block text-slate-300 font-medium mb-2">ช่องทางการชำระเงิน</label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex items-center gap-2 p-3 rounded-xl bg-white/5 border border-blue-500/50 cursor-pointer">
+              <input type="radio" name="payment" value="promptpay" checked class="text-blue-500">
+              <span class="text-xs text-white">โอนผ่าน PromptPay QR</span>
+            </label>
+            <label class="flex items-center gap-2 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer">
+              <input type="radio" name="payment" value="cod" class="text-blue-500">
+              <span class="text-xs text-white">เก็บเงินปลายทาง (COD)</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-base shadow-xl shadow-blue-500/30 transition-all hover:scale-105 mt-4">
+          ยืนยันการสั่งซื้อ (<span id="finalPriceText">฿390.00</span>)
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 bg-brand-dark/90 py-12 px-4 sm:px-8 mt-20 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white">
+          <i data-lucide="radio" class="w-4 h-4"></i>
+        </div>
+        <span class="font-bold text-white text-base">TAPKARD™ Thailand</span>
+        <span class="text-slate-500 text-xs">| Smart NFC Solutions for Business</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="#" class="hover:text-white transition-colors">นโยบายความเป็นส่วนตัว (PDPA)</a>
+        <a href="#" class="hover:text-white transition-colors">เงื่อนไขการรับประกันสินค้า</a>
+        <a href="https://line.me" target="_blank" class="hover:text-emerald-400 transition-colors flex items-center gap-1">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>LINE: @tapkard</span>
+        </a>
+      </div>
+
+      <div>
+        <p>© 2026 TAPKARD. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    let currentMode = 'personal';
+    let basePrice = 390;
+    let discountAmount = 0;
+
+    // Switch between Personal Card & Google Review Stand
+    function switchProductMode(mode) {
+      currentMode = mode;
+      const tabP = document.getElementById('tabPersonal');
+      const tabB = document.getElementById('tabBusiness');
+      const card = document.getElementById('smartCard');
+      const name = document.getElementById('cardHolderName');
+      const title = document.getElementById('cardHolderTitle');
+      const contact = document.getElementById('cardContactPreview');
+      const comp = document.getElementById('cardCompany');
+      const tag = document.getElementById('cardTagline');
+      const icon = document.getElementById('cardIcon');
+
+      if (mode === 'personal') {
+        tabP.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 bg-blue-600 text-white shadow-md';
+        tabB.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white';
+        
+        name.innerText = "ณัฐพงษ์ เจริญทรัพย์";
+        title.innerText = "Managing Director & Founder";
+        contact.innerText = "tapkard.me/nattapong";
+        comp.innerText = "TAPKARD ENTERPRISE";
+        tag.innerText = "SMART NFC SYSTEM";
+        card.className = "card-preserve-3d relative w-full h-[220px] sm:h-[240px] rounded-3xl p-6 shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer border border-white/15 bg-gradient-to-br from-neutral-900 via-neutral-950 to-black animate-float";
+      } else {
+        tabB.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 bg-yellow-500 text-black shadow-md font-bold';
+        tabP.className = 'flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white';
+        
+        name.innerText = "The Artisan Coffee & Bakery";
+        title.innerText = "⭐⭐⭐⭐⭐ ให้คะแนนรีวิว 5 ดาวบน Google";
+        contact.innerText = "maps.google.com/review/theartisan";
+        comp.innerText = "GOOGLE REVIEW TAP STAND";
+        tag.innerText = "NFC 5-STAR REVIEWS";
+        card.className = "card-preserve-3d relative w-full h-[220px] sm:h-[240px] rounded-3xl p-6 shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer border border-yellow-500/40 bg-gradient-to-br from-neutral-950 via-neutral-900 to-amber-950/40 animate-float";
+      }
+      lucide.createIcons();
+    }
+
+    // Tap Simulation Live Demo
+    function triggerTapDemo() {
+      const wave = document.getElementById('nfcWave');
+      const modal = document.getElementById('phoneModal');
+      const content = document.getElementById('phoneScreenContent');
+      
+      wave.classList.remove('hidden');
+      setTimeout(() => wave.classList.add('hidden'), 1200);
+
+      // Vibration haptic if supported
+      if (navigator.vibrate) {
+        navigator.vibrate([80, 40, 80]);
+      }
+
+      if (currentMode === 'personal') {
+        content.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg">ณ</div>
+            <div>
+              <h4 class="font-bold text-white text-sm">ณัฐพงษ์ เจริญทรัพย์</h4>
+              <p class="text-xs text-slate-400">Managing Director (TAPKARD)</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 mt-4">
+            <a href="profile.html" target="_blank" class="py-2.5 px-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i> เปิดหน้าโปรไฟล์จริง
+            </a>
+            <a href="https://line.me" target="_blank" class="py-2.5 px-3 bg-green-500 hover:bg-green-400 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> แอด LINE ทันที
+            </a>
+          </div>
+        `;
+      } else {
+        content.innerHTML = `
+          <div class="text-center space-y-2">
+            <div class="inline-flex text-yellow-400 text-xl tracking-widest animate-bounce">★★★★★</div>
+            <h4 class="font-bold text-white text-sm">รีวิวร้าน The Artisan Coffee บน Google</h4>
+            <p class="text-[11px] text-slate-300">ความพึงพอใจของคุณช่วยให้เราพัฒนาบริการ ขอบคุณที่ให้ 5 ดาวครับ!</p>
+            <a href="review.html" target="_blank" class="w-full py-2.5 bg-yellow-500 hover:bg-yellow-400 text-black rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 mt-3 shadow-lg">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i> ทดสอบเปิดหน้าแตะรีวิวจริง
+            </a>
+          </div>
+        `;
+      }
+      lucide.createIcons();
+      modal.classList.remove('hidden');
+    }
+
+    function closePhoneModal() {
+      document.getElementById('phoneModal').classList.add('hidden');
+    }
+
+    // Modal Checkout Logic
+    function openOrderModal(type, price, title) {
+      basePrice = price;
+      discountAmount = 0;
+      document.getElementById('modalPackageTitle').innerText = title;
+      updatePriceDisplay();
+      document.getElementById('orderModal').classList.remove('hidden');
+    }
+
+    function closeOrderModal() {
+      document.getElementById('orderModal').classList.add('hidden');
+    }
+
+    function applyDiscount() {
+      const code = document.getElementById('discountCode').value.trim().toUpperCase();
+      if (code === 'VIP50') {
+        discountAmount = 50;
+        alert('🎉 ยินดีด้วยครับ! ได้รับส่วนลด 50 บาท');
+      } else {
+        alert('❌ โค้ดส่วนลดไม่ถูกต้อง');
+      }
+      updatePriceDisplay();
+    }
+
+    function updatePriceDisplay() {
+      const finalPrice = Math.max(0, basePrice - discountAmount);
+      const text = `฿${finalPrice.toLocaleString('th-TH')}.00 (รวมส่งฟรี)`;
+      document.getElementById('modalPackagePrice').innerText = text;
+      document.getElementById('finalPriceText').innerText = `฿${finalPrice.toLocaleString('th-TH')}.00`;
+    }
+
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('custName').value;
+      const phone = document.getElementById('custPhone').value;
+      const finalPrice = Math.max(0, basePrice - discountAmount);
+      
+      alert(`🎉 บันทึกคำสั่งซื้อเรียบร้อยแล้ว!\n\nคุณ: ${name}\nเบอร์โทร: ${phone}\nยอดชำระ: ฿${finalPrice.toLocaleString('th-TH')} บาท\n\nทีมงาน TAPKARD จะติดต่อกลับทางเบอร์โทรเพื่อส่งแบบพรูฟก่อนสกรีนจริงครับ ขอบคุณครับ!`);
+      closeOrderModal();
+    }
+
+    function toggleFaq(num) {
+      const ans = document.getElementById(`faqAns${num}`);
+      const icon = document.getElementById(`faqIcon${num}`);
+      if (ans.classList.contains('hidden')) {
+        ans.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        ans.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    // Live Order Ticker simulation
+    const orders = [
+      "คุณธนกร (เชียงใหม่) เพิ่งสั่งซื้อ ป้ายแตะรีวิว Google 2 ชุด เมื่อ 2 นาทีที่แล้ว",
+      "คุณวิภาดา (กทม.) เพิ่งสั่งซื้อ นามบัตรดิจิทัล Matte Black 1 ใบ เมื่อ 5 นาทีที่แล้ว",
+      "คลินิกทันตกรรม D-Dent (ขอนแก่น) สั่งซื้อ ชุดคอมโบ้ธุรกิจ เมื่อ 9 นาทีที่แล้ว",
+      "คุณเกียรติศักดิ์ (ระยอง) เพิ่งสั่งซื้อ นามบัตรสำหรับเซลล์ 3 ใบ เมื่อ 14 นาทีที่แล้ว"
+    ];
+    let orderIdx = 0;
+    setInterval(() => {
+      orderIdx = (orderIdx + 1) % orders.length;
+      const ticker = document.getElementById('orderTicker');
+      ticker.style.opacity = '0';
+      setTimeout(() => {
+        ticker.innerText = orders[orderIdx];
+        ticker.style.opacity = '1';
+      }, 400);
+    }, 5000);
+  </script>
+</body>
+</html>
